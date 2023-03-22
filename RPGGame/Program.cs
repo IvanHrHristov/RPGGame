@@ -1,6 +1,7 @@
 ﻿using RPGGame;
 using RPGGame.EF_Core;
 using RPGGame.PlayerClasses;
+using static System.Net.Mime.MediaTypeNames;
 
 char[,] map =
 {
@@ -215,7 +216,7 @@ while (player.Health > 0)
         switch (Console.ReadLine())
         {
             case "1":
-                //TODO
+                player.Attack(map, currX, currY, enemies);
                 choiceIsCorrect = true;
                 break;
             case "2":
@@ -231,6 +232,10 @@ while (player.Health > 0)
 
     foreach (var enemy in enemies)
     {
+        if (enemy.Health <= 0)
+        {
+            map[enemy.XPosition, enemy.YPosition] = '▒';
+        }
         if (enemy.CheckIfNearPlayer(map))
         {
             player.TakeDamage(enemy.Damage);

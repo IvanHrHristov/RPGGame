@@ -256,7 +256,9 @@ namespace RPGGame
         public Enemy SpawnEnemy(char[,] map)
         {
             Random ran = new Random();
+
             int x, y;
+
             while (true)
             {
                 x = ran.Next(0, 9);

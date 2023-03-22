@@ -37,53 +37,65 @@
         {
             bool check = false;
 
-            for (int x = (XPosition - 1) < 0 ? 0 : (XPosition - 1); x <= ((XPosition + 1) > 9 ? 9 : (XPosition + 1)); x++)
+            if (Health >= 0)
             {
-                for (int y = (YPosition - 1) < 0 ? 0 : (YPosition - 1); y <= ((YPosition + 1) > 9 ? 9 : (YPosition + 1)); y++)
+                for (int x = (XPosition - 1) < 0 ? 0 : (XPosition - 1); x <= ((XPosition + 1) > 9 ? 9 : (XPosition + 1)); x++)
                 {
-                    if (map[x, y] == '#' || map[x, y] == '@' || map[x, y] == '*')
+                    for (int y = (YPosition - 1) < 0 ? 0 : (YPosition - 1); y <= ((YPosition + 1) > 9 ? 9 : (YPosition + 1)); y++)
                     {
-                        check = true;
+                        if (map[x, y] == '#' || map[x, y] == '@' || map[x, y] == '*')
+                        {
+                            check = true;
+                        }
                     }
                 }
             }
+
             return check;
         }
 
         public void Move(char[,] map, int playerX, int playerY)
         {
-            int orgX = XPosition, orgY = YPosition;
+            if (Health >= 0)
+            {
+                int orgX = XPosition, orgY = YPosition;
 
-            map[XPosition, YPosition] = '▒';
+                map[XPosition, YPosition] = '▒';
 
-            if (playerX > XPosition)
-            {
-                XPosition += 1;
-            }
-            else if (playerX < XPosition)
-            {
-                XPosition -= 1;
-            }
+                if (playerX > XPosition)
+                {
+                    XPosition += 1;
+                }
+                else if (playerX < XPosition)
+                {
+                    XPosition -= 1;
+                }
 
-            if (playerY > YPosition)
-            {
-                YPosition += 1;
-            }
-            else if(playerY < YPosition)
-            {
-                YPosition -= 1;
-            }
+                if (playerY > YPosition)
+                {
+                    YPosition += 1;
+                }
+                else if (playerY < YPosition)
+                {
+                    YPosition -= 1;
+                }
 
-            if (map[XPosition, YPosition] == '▒')
-            {
-                map[XPosition, YPosition] = 'E';
+                if (map[XPosition, YPosition] == '▒')
+                {
+                    map[XPosition, YPosition] = 'E';
+                }
+                else
+                {
+                    map[orgX, orgY] = 'E';
+                    XPosition = orgX;
+                    YPosition = orgY;
+                }
             }
-            else
-            {
-                map[orgX, orgY] = 'E';
-                XPosition = orgX;
-                YPosition = orgY;
-            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
         }
     }
 }
